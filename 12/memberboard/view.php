@@ -17,9 +17,9 @@
 	$content = str_replace(" ", "&nbsp;", $content);		// 공백 변환
 	$content = str_replace("\n", "<br>", $content);			// 줄바꿈 변환
 
-	$file_name    = $row["file_name"];
-	$file_type    = $row["file_type"];
-	$file_copied  = $row["file_copied"];	
+	$file_name    = $row["file_name"];		//첨부 파일 명
+	$file_type    = $row["file_type"];		//첨부 파일 타입(확장자)
+	$file_copied  = $row["file_copied"];	//실제 저장된 파일명
 ?>	
 <!DOCTYPE html>
 <html>

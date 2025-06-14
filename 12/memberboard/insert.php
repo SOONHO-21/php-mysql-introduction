@@ -1,13 +1,13 @@
 <?php
 	include "session.php"; 	// 세션 처리
 
-	if (!$userid) {
+	if (!$userid) {		//로그인이 안 되어있다면
 		echo "
 				<script>
 				alert('게시판 글쓰기는 로그인 후 이용해 주세요!');
 				history.go(-1)
 				</script>
-		";
+		";	//로그인 요구
 		exit;
 	}
     $subject = $_POST["subject"];		// 제목
@@ -17,23 +17,23 @@
 	$content = htmlspecialchars($content, ENT_QUOTES);	// 내용 HTML 특수문자 변환 
 	$regist_day = date("Y-m-d (H:i)");  // UTC 기준 현재의 '년-월-일 (시:분)'
 
-	$upload_dir = './data/';
+	$upload_dir = './data/';	//첨부파일 저장 디렉토리
 
-	$upfile_name	 = $_FILES["upfile"]["name"];
-	$upfile_tmp_name = $_FILES["upfile"]["tmp_name"];
-	$upfile_type     = $_FILES["upfile"]["type"];
-	$upfile_size     = $_FILES["upfile"]["size"];
-	$upfile_error    = $_FILES["upfile"]["error"];
+	$upfile_name	 = $_FILES["upfile"]["name"];		//업로드 파일명
+	$upfile_tmp_name = $_FILES["upfile"]["tmp_name"];	//실제 서버에 저장되는 임시파일 명
+	$upfile_type     = $_FILES["upfile"]["type"];		//업로드 파일 타입
+	$upfile_size     = $_FILES["upfile"]["size"];		//업로드 파일 크기
+	$upfile_error    = $_FILES["upfile"]["error"];		//발생된 오류
 
-	if ($upfile_name && !$upfile_error)
+	if ($upfile_name && !$upfile_error)		//파일이름이 있고 오류가 없으면
 	{
-		$file = explode(".", $upfile_name);
-		$file_name = $file[0];
-		$file_ext  = $file[1];
+		$file = explode(".", $upfile_name);	//업로드 파일명과 확장자 분리. 배열 형태로 $file에 저장
+		$file_name = $file[0];	//업로드 파일명
+		$file_ext  = $file[1];	//확장자
 
-		$copied_file_name = date("Y_m_d_H_i_s");
-		$copied_file_name .= ".".$file_ext;
-		$uploaded_file = $upload_dir.$copied_file_name;
+		$copied_file_name = date("Y_m_d_H_i_s");	//업로드 날짜
+		$copied_file_name .= ".".$file_ext;		//확장자
+		$uploaded_file = $upload_dir.$copied_file_name;	//파일 명에 날짜 + 확장자
 
 		if( $upfile_size  > 10000000 ) {
 				echo("
