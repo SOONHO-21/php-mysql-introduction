@@ -29,7 +29,7 @@
 	$is_html = $_POST['is_html'];		// HTML 쓰기
 
 	$subject = htmlspecialchars($subject, ENT_QUOTES);	// 제목 HTML 특수문자 변환
-	$content = htmlspecialchars($content, ENT_QUOTES);	// 내용 HTML 특수문자 변환 
+	$content = htmlspecialchars($content, ENT_QUOTES);	// 내용 HTML 특수문자 변환
 	$regist_day = date("Y-m-d (H:i)");  // UTC 기준 현재의 '년-월-일 (시:분)'
 
 	$upload_dir = './data/';
@@ -84,14 +84,12 @@
 	$sql .= "values('$userid', '$username', '$subject', '$content', '$is_html', '$regist_day', ";
 	$sql .= "'$upfile_name', '$upfile_type', '$copied_file_name')";
 
-	mysqli_query($con, $sql);  // $sql에 저장된 명령 실행
+	mysqli_query($con, $sql);	// $sql에 저장된 명령 실행
 
-	mysqli_close($con);       // DB 연결 끊기
+	mysqli_close($con);		// DB 연결 끊기
 
 	// 목록 페이지로 이동
 	echo "<script>
 	    location.href = 'index.php?type=list&table=$table';
 	   </script>";
 ?>
-
-  

@@ -23,8 +23,8 @@
 	$sql .= "values('$id', '$pass', '$name', '$email', '$regist_day', 9, 100)";
 	mysqli_query($con, $sql);       // SQL 명령 실행
 
-    mysqli_close($con);     
+    mysqli_close($con);
     echo "<script>
-	          location.href = 'index.php?type=login_form';
+			location.href = 'index.php?type=login_form';
 	      </script>";
 ?>

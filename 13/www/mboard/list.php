@@ -14,9 +14,28 @@
 		$page = 1;
 
 	include "../include/db_connect.php";
-	$sql = "select * from $table order by num desc";	// 일련번호 내림차순 검색
-	$result = mysqli_query($con, $sql);			// SQL 명령 실행
+	// $sql = "select * from $table order by num desc";	// 일련번호 내림차순 검색
 
+	$search_field = isset($_GET['search_field']) ? $_GET['search_field'] : '';
+	$search_word  = isset($_GET['search_word']) ? $_GET['search_word'] : '';
+
+	if ($search_word) {
+		$search_word = mysqli_real_escape_string($con, $search_word);
+		
+		if ($search_field == "subject") {
+			$sql = "select * from $table where subject like '%$search_word%' order by num desc";
+		} else if ($search_field == "content") {
+			$sql = "select * from $table where content like '%$search_word%' order by num desc";
+		} else if ($search_field == "subject_content") {
+			$sql = "select * from $table where subject like '%$search_word%' or content like '%$search_word%' order by num desc";
+		} else {
+			$sql = "select * from $table order by num desc";
+		}
+	} else {
+		$sql = "select * from $table order by num desc";
+	}
+
+	$result = mysqli_query($con, $sql);			// SQL 명령 실행
 	$total_record = mysqli_num_rows($result); // 전체 글 수
 
 	// 전체 페이지 수($total_page) 계산 
