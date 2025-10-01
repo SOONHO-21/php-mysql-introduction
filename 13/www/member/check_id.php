@@ -11,30 +11,29 @@
 <?php
    $id = $_GET["id"];
 
-   if(!$id) {
+   if(!$id){
       echo("아이디를 입력해 주세요!");
    }
-   else {
+   else{
       include "../include/db_connect.php";
 
       $sql = "select * from _mem where id='$id'";
       $result = mysqli_query($con, $sql);
 
-      $num_record = mysqli_num_rows($result);
+      $new_record = mysqli_num_rows($result);
 
-      if ($num_record) {
+      if($new_record) {
          echo $id." 아이디는 중복됩니다.<br>";
          echo "다른 아이디를 사용해 주세요!<br>";
-      }
-      else {
+      } else {
          echo $id." 아이디는 사용 가능합니다.<br>";
-      }    
+      }
       mysqli_close($con);
    }
 ?>
    </div>
    <div class="close">
-      <button type="button" onclick="javascript:self.close()">창 닫기</button>
+      <button type="button" onclick="javascript:self.close()">창 듣기</button>
    </div>
 </body>
 </html>

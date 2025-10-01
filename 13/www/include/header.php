@@ -59,5 +59,5 @@
     <li><a href="../mboard/index.php?type=list&table=_notice">공지 게시판</a></li>
     <li><a href="../mboard/index.php?type=list&table=_qna">QNA 게시판</a></li>
     <li><a href="../mboard/index.php?type=list&table=_youtube">YOUTUBE 게시판</a></li>
-    </ul> <!-- main_menu -->
+    </ul>   <!-- main_menu -->
 </header>

@@ -13,8 +13,8 @@
 
     mysqli_close($con);           // DB 접속 해제
 
-    // 목록보기 이동
+    // 글보기로 이동
     echo "<script>
-	         location.href = 'index.php?type=view&table=$table&num=$num';
-	     </script>";
+        location.href = 'index.php?type=view&table=$table&num=$num&page=$page';
+        </script>";
 ?>
