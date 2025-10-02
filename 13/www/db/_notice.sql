@@ -1,6 +1,6 @@
 create table _notice (
    num int not null auto_increment,
-   id char(20) not null,     
+   id char(20) not null,
    name char(20) not null,
    subject char(200) not null,
    content text,

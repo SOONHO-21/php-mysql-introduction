@@ -1,48 +1,43 @@
 <?php
 	$num  = $_GET["num"];
-	$page  = $_GET["page"];
 
     include "../include/db_connect.php";
 	$sql = "select * from $table where num=$num";	// 레코드 검색
-	$result = mysqli_query($con, $sql);			// SQL 명령 실행
+	$result = mysqli_query($con, $sql);		// SQL 명령 실행
 
-	$row = mysqli_fetch_assoc($result);			// 레코드 가져오기
+	$row = mysqli_fetch_assoc($result);		// 레코드 가져오기
 
-	$id      = $row["id"];						// 아이디
-	$name      = $row["name"];					// 이름
-	$subject    = $row["subject"];				// 제목
-	$regist_day   = $row["regist_day"];			// 작성일
-	$content    = $row["content"];				// 내용
-	$is_html    = $row["is_html"];				// HTML 쓰기
+	$id = $row["id"];	// 아이디
+	$name = $row["name"];	// 이름
+	$subject = $row["subject"];		// 제목
+	$regist_day = $row["regist_day"];	// 작성일
+	$content = $row["content"];		// 내용
+	$is_html = $row["is_html"];		// HTML 쓰기
 	if ($is_html=="y") {
-		$content = htmlspecialchars_decode($content, ENT_QUOTES); 
+		$content = htmlspecialchars_decode($content, ENT_QUOTES);
 	}	
 	else {
-		$content = str_replace(" ", "&nbsp;", $content);		// 공백 변환
-		$content = str_replace("\n", "<br>", $content);			// 줄바꿈 변환
+		$content = str_replace(" ", "&nbsp;", $content);	// 공백 변환
+		$content = str_replace("\n", "<br>", $content);		// 줄바꿈 변환
 	}	
 
-	$file_name    = $row["file_name"];
-	$file_type    = $row["file_type"];
-	$file_copied  = $row["file_copied"];	
+	$file_name = $row["file_name"];
+	$file_type = $row["file_type"];
+	$file_copied = $row["file_copied"];
 ?>
 <script>
-	function ripple_check_input()
-	{
-		if (!document.ripple_form.ripple_content.value)
-		{
+	function ripple_check_input() {
+		if (!document.ripple_form.ripple_content.value) {
 			alert("내용을 입력하세요!");
 			document.ripple_form.ripple_content.focus();
 			return;
 		}
-
 		document.ripple_form.submit();
     }
 
-    function ripple_del(href)
-    {
+    function ripple_del(href) {
         if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-                document.location.href = href;
+			document.location.href = href;
         }
     }
 </script>
@@ -64,11 +59,11 @@
 			       	<a href='download.php?num=$num&file_copied=$file_copied&file_name=$file_name&file_type=$file_type'>[저장]</a><br><br>";
 			}
 			echo $content;
-		?>	 <!-- 내용 출력 -->
+		?>	<!-- 내용 출력 -->
 	</li>
 </ul>
 
-	<!-- view ripple -->
+<!-- view ripple -->
 <?php
 	if ($table=="_qna") {
         $table_ripple = $table."_ripple";
@@ -89,21 +84,21 @@
 			$ripple_content = str_replace(" ", "&nbsp;", $ripple_content);
 			$ripple_date    = $row_ripple["regist_day"];
 ?>
-            <div class="ripple_title">
-			    <span class="col1"><?=$ripple_name?></span>
-			    <span class="col2"><?=$ripple_date?></span>
-			    <span class="col3">
-			        <?php
-			            if ($userlevel==1 or $userid==$ripple_id)
-			                echo "<a href='delete_ripple.php?table=$table&num=$num&ripple_num=$ripple_num&page=$page'>삭제</a>";
-			            else
-			                echo "<a href='#'>삭제</a>";
-			        ?>
-			    </span>
-			</div>
-			<div class="ripple_content">
-			    <?=$ripple_content?>
-			</div>
+		<div class="ripple_title">
+			<span class="col1"><?=$ripple_name?></span>
+			<span class="col2"><?=$ripple_date?></span>
+			<span class="col3">
+				<?php
+					if ($userlevel==1 or $userid==$ripple_id)
+						echo "<a href='delete_ripple.php?table=$table&num=$num&ripple_num=$ripple_num'>삭제</a>";
+					else
+						echo "<a href='#'>삭제</a>";
+				?>
+			</span>
+		</div>
+		<div class="ripple_content">
+			<?=$ripple_content?>
+		</div>
 <?php
             $count++;
 		}
@@ -119,24 +114,24 @@
 	    </form>
     </div>  
 <?php
-	} // end of if ($table=="_qna")
+	}	// end of if ($table=="_qna")
 ?>
 
 <ul class="buttons">
 		<?php
-			$list_url = "index.php?type=list&table=$table&page=$page";
-			$modify_url = "index.php?type=modify_form&table=$table&num=$num&page=$page";
-			$delete_url = "delete.php?table=$table&num=$num&page=$page";
+			$list_url = "index.php?type=list&table=$table";
+			$modify_url = "index.php?type=modify_form&table=$table&num=$num";
+			$delete_url = "delete.php?table=$table&num=$num";
 			$write_url = "index.php?type=form&table=$table";
 		?>
 	<li><button onclick="location.href='<?=$list_url?>'">목록보기</button></li>
 <?php
 	if ($userlevel==1 or $userid==$id) {
 ?>
-	<li><button onclick="location.href='<?=$modify_url?>'">수정하기</button></li>   
+	<li><button onclick="location.href='<?=$modify_url?>'">수정하기</button></li>
 	<li><button onclick="location.href='<?=$delete_url?>'">삭제하기</button></li>
 <?php
-}
+	}
 ?>
 
 <?php

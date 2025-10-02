@@ -26,5 +26,8 @@ if (isset($_FILES['profile_img']) && $_FILES['profile_img']['name'] != "") {
 }
 
 mysqli_close($con);
-echo "<script>alert('프로필 사진이 업데이트되었습니다.'); location.href='profile.php';</script>";
+echo "<script>
+    alert('프로필 사진이 업데이트되었습니다.');
+    location.href='profile.php';
+    </script>";
 ?>

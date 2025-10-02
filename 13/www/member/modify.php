@@ -32,8 +32,8 @@
     mysqli_close($con);
 
     echo "
-	      <script>
-	          location.href = './profile.php';
-	      </script>
+        <script>
+            location.href = './profile.php';
+        </script>
 	  ";
 ?>

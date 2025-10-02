@@ -1,3 +1,16 @@
+<!-- 검색 폼 -->
+<form method="get" action="index.php">
+    <input type="hidden" name="type" value="list">
+    <input type="hidden" name="table" value="<?=$table?>">
+    <select name="search_field">
+        <option value="subject">제목</option>
+        <option value="content">내용</option>
+        <option value="subject_content">제목+내용</option>
+    </select>
+    <input type="text" name="search_word" placeholder="검색어 입력">
+    <button type="submit">검색</button>
+</form>
+
 <ul class="board_list">
 	<h2><?=$board_title?> > 목록보기</h2>
 	<li>
@@ -14,14 +27,13 @@
 		$page = 1;
 
 	include "../include/db_connect.php";
-	// $sql = "select * from $table order by num desc";	// 일련번호 내림차순 검색
 
 	$search_field = isset($_GET['search_field']) ? $_GET['search_field'] : '';
 	$search_word  = isset($_GET['search_word']) ? $_GET['search_word'] : '';
 
 	if ($search_word) {
 		$search_word = mysqli_real_escape_string($con, $search_word);
-		
+
 		if ($search_field == "subject") {
 			$sql = "select * from $table where subject like '%$search_word%' order by num desc";
 		} else if ($search_field == "content") {
@@ -35,12 +47,12 @@
 		$sql = "select * from $table order by num desc";
 	}
 
-	$result = mysqli_query($con, $sql);			// SQL 명령 실행
+	$result = mysqli_query($con, $sql);
 	$total_record = mysqli_num_rows($result); // 전체 글 수
 
 	// 전체 페이지 수($total_page) 계산 
 	if ($total_record % $scale == 0)     
-		$total_page = floor($total_record/$scale);      
+		$total_page = floor($total_record/$scale);
 	else
 		$total_page = floor($total_record/$scale) + 1; 
  
@@ -52,13 +64,13 @@
       	mysqli_data_seek($result, $i); 		// 가져올 레코드로 위치(포인터) 이동      	
       	$row = mysqli_fetch_assoc($result); // 하나의 레코드 가져오기
 
-	  	$num         = $row["num"];			// 일련번호
-		$id        	 = $row["id"];			// 아이디
-	  	$name        = $row["name"];		// 이름
-	  	$subject     = $row["subject"];		// 제목
-      	$regist_day  = $row["regist_day"]; 	// 작성일
-		$file_name  = $row["file_name"];	// 첨부 파일
-		$file_copied  = $row["file_copied"];	// 저장된 파일
+	  	$num = $row["num"];		// 일련번호
+		$id = $row["id"];	// 아이디
+	  	$name = $row["name"];	// 이름
+	  	$subject = $row["subject"];		// 제목
+      	$regist_day = $row["regist_day"];	// 작성일
+		$file_name = $row["file_name"];		// 첨부 파일
+		$file_copied = $row["file_copied"];	// 저장된 파일
 
 		if ($file_name) {
 			if ($table == "_youtube")
@@ -67,39 +79,39 @@
 				$file_image = "<img src='../img/file.png'>";
 		}
       	else
-      		$file_image = " ";		  
+      		$file_image = " ";
 ?>
 	<li>
-		<span class="col1"><?=$number?></span>		
-			<?php 
-				$view_url = "index.php?type=view&table=$table&num=$num&page=$page"; 
+		<span class="col1"><?=$number?></span>
+			<?php
+			$view_url = "index.php?type=view&table=$table&num=$num&page=$page";
 			?>
 		<span class="col2">
 			<a href="<?=$view_url?>">
-					<?php
-						if($table=="_youtube" && $file_name)
-							echo "<img src='./data/".$file_copied."' width='150'>".$subject;
-						else 
-							echo $subject;
-					?>
+				<?php
+				if($table=="_youtube" && $file_name)
+					echo "<img src='./data/".$file_copied."' width='150'>".$subject;
+				else
+					echo $subject;
+				?>
 			</a>
-					<?php
-						if($table=="_qna") {
-							$table_ripple = $table."_ripple";
+			<?php
+				if($table=="_qna") {
+					$table_ripple = $table."_ripple";
 
-							$sql = "select * from $table_ripple where parent=$num";
-							$result2 = mysqli_query($con, $sql);
-							$num_ripple = mysqli_num_rows($result2);
-  
-						  	if ($num_ripple)
-							   echo " [$num_ripple]";
-						}
-	  				?>
+					$sql = "SELECT * FROM $table_ripple WHERE parent=$num";
+					$result2 = mysqli_query($con, $sql);
+					$num_ripple = mysqli_num_rows($result2);
+
+					if($num_ripple)
+						echo " [$num_ripple]";
+				}
+			?>
 		</span>
 		<span class="col3"><?=$name?></span>
 		<span class="col4"><?=$file_image?></span>
 		<span class="col5"><?=$regist_day?></span>
-	</li>	
+	</li>
 <?php
    	   $number--;
    	}
@@ -132,21 +144,21 @@
 ?>
 </ul> <!-- page -->
 <ul class="buttons">
-		<?php
-			$list_url = "index.php?type=list&table=$table&page=$page";
-		?>
-	<li><button onclick="location.href='<?=$list_url?>'">목록</button></li>
-		<?php
-			if($userid)	
-				$onclick = "location.href='index.php?type=form&table=$table'";
-			else
-			$onclick = "alert('로그인 후 이용해 주세요!')";
-		?>
-        <?php
-	        if ( $userlevel==1 or $table=="_youtube" or  $table=="_qna") {
-        ?>
-	        <li><button onclick="<?=$onclick?>">글쓰기</button></li>
-	    <?php
-	        }
-	    ?>
+<?php
+	$list_url = "index.php?type=list&table=$table&page=$page";
+?>
+<li><button onclick="location.href='<?=$list_url?>'">목록</button></li>
+<?php
+	if($userid)	
+		$onclick = "location.href='index.php?type=form&table=$table'";
+	else
+	$onclick = "alert('로그인 후 이용해 주세요!')";
+?>
+<?php
+	if ( $userlevel==1 or $table=="_youtube" or  $table=="_qna") {
+?>
+	<li><button onclick="<?=$onclick?>">글쓰기</button></li>
+<?php
+	}
+?>
 </ul>		
