@@ -2,7 +2,7 @@
 include "../include/db_connect.php";
 include "admin_check.php";
 
-$table = $_GET['table'];
+$table = $_GET['table'];    // 테이블 이름 파라미터
 $sql = "SELECT num, subject, name, regist_day FROM $table ORDER BY num DESC";
 $result = mysqli_query($con, $sql);
 ?>

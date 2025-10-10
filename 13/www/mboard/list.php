@@ -73,7 +73,7 @@
 		$file_copied = $row["file_copied"];	// 저장된 파일
 
 		if ($file_name) {
-			if ($table == "_youtube")
+			if ($table == "_youtube")	// 유튜브 게시판이면?
       			$file_image = "<img src='../img/youtube.png' height='20'>";
 			else
 				$file_image = "<img src='../img/file.png'>";
@@ -89,7 +89,7 @@
 		<span class="col2">
 			<a href="<?=$view_url?>">
 				<?php
-				if($table=="_youtube" && $file_name)
+				if($table=="_youtube" && $file_name)	// 유튜브 게시판이면서 파일이 있으면
 					echo "<img src='./data/".$file_copied."' width='150'>".$subject;
 				else
 					echo $subject;

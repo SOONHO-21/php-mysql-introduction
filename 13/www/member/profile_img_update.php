@@ -15,7 +15,7 @@ if (isset($_FILES['profile_img']) && $_FILES['profile_img']['name'] != "") {
     $file_tmp  = $_FILES['profile_img']['tmp_name'];
 
     // 파일명 중복 방지
-    $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
+    $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);   // 파일 확장자 추출
     $new_name = $userid."_".time().".".$file_ext;
 
     move_uploaded_file($file_tmp, $upload_dir.$new_name);

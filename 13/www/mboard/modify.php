@@ -35,8 +35,8 @@
 	$regist_day = date("Y-m-d (H:i)");  // UTC 기준 현재의 '년-월-일 (시:분)'
 
     include "../include/db_connect.php";
-	$sql = "update $table set subject='$subject', is_html='$is_html', ";	// 수정 명령
-	$sql .= "content='$content', regist_day='$regist_day' where num=$num";
+	$sql = "UPDATE $table SET subject='$subject', is_html='$is_html', ";	// 수정 명령
+	$sql .= "content='$content', regist_day='$regist_day' WHERE num=$num";
 
 	mysqli_query($con, $sql);  // SQL 명령 실행
 

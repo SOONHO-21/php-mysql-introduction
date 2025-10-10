@@ -40,8 +40,10 @@ $profile_img = $row['profile_img'];
     <?php
     $tables = ["_notice" => "공지 게시판", "_qna" => "QNA 게시판", "_youtube" => "유튜브 게시판"];
     foreach($tables as $table => $board_name) {
-        $sql = "SELECT num, subject, regist_day FROM $table WHERE id='$userid' ORDER BY num DESC
-        LIMIT 5";   // 최근 5개만
+    ?>
+        <?=$board_name?>
+    <?php
+        $sql = "SELECT num, subject, regist_day FROM $table WHERE id='$userid' ORDER BY num DESC LIMIT 5";  // 최근 5개만
         $result = mysqli_query($con, $sql);
     ?>
     <ul>
