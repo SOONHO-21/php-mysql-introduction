@@ -2,7 +2,7 @@
 session_start();
 include "../include/db_connect.php";
 
-if (!isset($_SESSION['userid'])) {
+if(!isset($_SESSION['userid'])) {
     echo "<script>alert('로그인 후 이용 가능합니다.'); history.back();</script>";
     exit;
 }
