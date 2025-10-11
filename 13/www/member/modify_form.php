@@ -50,7 +50,7 @@
     $name = $row["name"];
     $email = $row["email"];
     $profile_img = $row['profile_img'];
-
+    
     mysqli_close($con);
 ?>
 <form name="member" action="modify.php?id=<?=$userid?>" method="post" enctype="multipart/form-data">
