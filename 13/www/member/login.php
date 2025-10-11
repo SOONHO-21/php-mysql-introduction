@@ -4,12 +4,12 @@
     $_SESSION['userlevel'] = $row['level'];  // 중요!
 
     include "../include/db_connect.php";
-    $sql = "select * from _mem where id='$id'"; //아이디가 존재하는지 체크
-    $result = mysqli_query($con, $sql); //쿼리결과
+    $sql = "select * from _mem where id='$id'"; // 아이디가 존재하는지 체크
+    $result = mysqli_query($con, $sql); // 쿼리결과
     
-    $num_match = mysqli_num_rows($result);  //쿼리결과 개수(1개 or 0개)
+    $num_match = mysqli_num_rows($result);  // 쿼리결과 개수(1개 or 0개)
 
-    if(!$num_match) {   //쿼리결과가 있어야 로그인 가능
+    if(!$num_match) {   // 쿼리결과가 있어야 로그인 가능
         echo "<script>
             window.alert('등록되지 않는 아이디입니다!')
             history.go(-1)
@@ -21,7 +21,7 @@
 
         mysqli_close($con);
 
-        if($pass != $db_pass) {   //비밀번호가 틀리면
+        if($pass != $db_pass) {   // 비밀번호가 틀리면
         echo "<script>
             window.alert('비밀번호가 틀립니다!')
             history.go(-1)

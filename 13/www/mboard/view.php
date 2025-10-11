@@ -104,7 +104,7 @@
 			mysqli_close($con);
 	?>
 
-	<!-- ripple wirte box -->
+	<!-- 댓글 작성 폼 -->
 	<div class="ripple_box">
 	<form name="ripple_form" method="post" action="insert_ripple.php?table=<?=$table?>&num=<?=$num?>&page=<?=$page?>">
 		<div class="ripple_box1"><img src="../img/ripple_title.png"></div>
