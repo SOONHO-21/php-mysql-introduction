@@ -1,5 +1,7 @@
 <?php
 	$num  = $_GET["num"];
+	$table = $_GET["table"];
+	$page  = isset($_GET['page'])  ? intval($_GET['page'])  : 1;	// 기본값 1
 
     include "../include/db_connect.php";
 	$sql = "select * from $table where num=$num";	// 레코드 검색
@@ -65,7 +67,7 @@
 
 <!-- view ripple -->
 <?php
-	if($table = "_qna") {
+	if($table == "_qna") {
 		$table_ripple = $table."_ripple";
 
 	    $sql = "select * from $table_ripple where parent='$num' order by num";
@@ -91,7 +93,7 @@
 			if($userlevel==1 or $userid==$ripple_id)
 				echo "<a href='delete_ripple.php?table=$table&num=$num&ripple_num=$ripple_num'>삭제</a>";
 			else
-				echo "<a href='#'>삭제</a>"
+				echo ""
 			?>
 		</span>
 	</div>
@@ -105,22 +107,24 @@
 	?>
 
 	<!-- 댓글 작성 폼 -->
-	<div class="ripple_box">
-	<form name="ripple_form" method="post" action="insert_ripple.php?table=<?=$table?>&num=<?=$num?>&page=<?=$page?>">
-		<div class="ripple_box1"><img src="../img/ripple_title.png"></div>
-		<div class="ripple_box2"><textarea name="ripple_content"></textarea></div>
-		<div class="ripple_box3"><a href="#"><img src="../img/ripple_button.png"  onclick="ripple_check_input()"></a></div>
-	</form>
-	</div>
+    <div class="ripple_box">
+			<form  name="ripple_form" method="post" action="insert_ripple.php?table=<?=$table?>&num=<?=$num?>">
+		    <div class="ripple_box1"><img src="../img/ripple_title.png"></div>
+	        <div class="ripple_box2"><textarea name="ripple_content"></textarea></div>
+		    <div class="ripple_box3">
+				<a href="javascript:void(0)" onclick="ripple_check_input()"><img src="../img/ripple_button.png"></a>
+			</div>
+	    </form>
+    </div>  
 <?php
-	}	// end of if ($table=="_qna")
+	}	// end of if($table == "_qna")
 ?>	 
 
 <ul class="buttons">
 		<?php
 			$list_url = "index.php?type=list&table=$table";
 			$modify_url = "index.php?type=modify_form&table=$table&num=$num";
-			$delete_url = "delete.php?table=$table&num=$num";
+			$delete_url = "delete.php?table=$table&num=$num&page=$page";
 			$write_url = "index.php?type=form&table=$table";
 		?>
 	<li><button onclick="location.href='<?=$list_url?>'">목록보기</button></li>

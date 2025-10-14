@@ -2,12 +2,12 @@
 <form method="get" action="index.php">
     <input type="hidden" name="type" value="list">
     <input type="hidden" name="table" value="<?=$table?>">
-    <select name="search_field">	<!--검색어 범위 선택 리스트-->
+    <select name="search_field">
         <option value="subject">제목</option>
         <option value="content">내용</option>
         <option value="subject_content">제목+내용</option>
     </select>
-    <input type="text" name="search_word" placeholder="검색어 입력">	<!--검색어 입력창-->
+    <input type="text" name="search_word" placeholder="검색어 입력">
     <button type="submit">검색</button>
 </form>
 
@@ -28,41 +28,49 @@
 
 	include "../include/db_connect.php";
 
-	$search_field = isset($_GET['search_field']) ? $_GET['search_field'] : '';	// 검색 범위 선택
+	$search_field = isset($_GET['search_field']) ? $_GET['search_field'] : '';	// 검색 범위
 	$search_word  = isset($_GET['search_word']) ? $_GET['search_word'] : '';	// 검색 키워드
 
-	if ($search_word) {		// 검색 키워드가 존재하면
+	if ($search_word) {
 		$search_word = mysqli_real_escape_string($con, $search_word);
 
-		if ($search_field == "subject") {	// 검색 범위가 제목이면
-			$sql = "SELECT * FROM $table WHERE subject LIKE '%$search_word%' ORDER BY num DESC";
+		if ($search_field == "subject") {	// 글 검색기능
+			$sql = "select * from $table where subject like '%$search_word%' order by num desc";
 		} else if ($search_field == "content") {	// 검색 범위가 내용이면
-			$sql = "SELECT * FROM $table WHERE content LIKE '%$search_word%' ORDER BY num DESC";
-		} else if ($search_field == "subject_content") {	// 검색 범위가 제목 + 내용이면
-			$sql = "SELECT * FROM $table WHERE subject LIKE '%$search_word%' OR content LIKE '%$search_word%' ORDER BY num DESC";
+			$sql = "select * from $table where content like '%$search_word%' order by num desc";
+		} else if ($search_field == "subject_content") {	// 검색 범위가 제목이면
+			$sql = "select * from $table where subject like '%$search_word%' or content like '%$search_word%' order by num desc";
 		} else {
-			$sql = "SELECT * FROM $table ORDER BY num DESC";
+			$sql = "select * from $table order by num desc";
 		}
 	} else {
-		$sql = "SELECT * FROM $table ORDER BY num DESC";
+		$sql = "select * from $table order by num desc";
 	}
 
 	$result = mysqli_query($con, $sql);
-	$total_record = mysqli_num_rows($result);	// 전체 글 수 추출
+	$total_record = mysqli_num_rows($result);	// 전체 글 수
 
-	// 전체 페이지 수($total_page) 계산 
-	if ($total_record % $scale == 0)     
+	// 전체 페이지 수($total_page) 계산
+	if ($total_record % $scale == 0)
 		$total_page = floor($total_record/$scale);
 	else
-		$total_page = floor($total_record/$scale) + 1; 
+		$total_page = floor($total_record/$scale) + 1;
  
 	// 표시할 페이지($page)에 따라 $start 계산  
-	$start = (intval($page) - 1) * $scale;      
+	$page = isset($page) && intval($page) > 0 ? intval($page) : 1;  // 기본값 보정. $page가 0 보다 크지 않으면 기본값 1
+	$start = ($page - 1) * $scale;
+
+	// 페이지 보정: 글이 삭제되어 현재 페이지가 비었을 경우 마지막 페이지로 이동
+	if ($start >= $total_record && $total_record > 0) {
+		$page = ceil($total_record / $scale);	// ceil : 입력값에 소수부분이 존재할 때 값을 올려서 리턴하는 함수
+		$start = ($page - 1) * $scale;
+	}
 
 	$number = $total_record - $start;
-   	for ($i=$start; $i<$start+$scale && $i < $total_record; $i++) {
-      	mysqli_data_seek($result, $i); 		// 가져올 레코드로 위치(포인터) 이동
-      	$row = mysqli_fetch_assoc($result); // 하나의 레코드 가져오기
+
+   	for ($i=$start; $i<$start + $scale && $i < $total_record; $i++) {	// 한 페이지에서 반복 되는 것
+      	mysqli_data_seek($result, $i);		// 가져올 레코드로 위치(포인터) 이동
+      	$row = mysqli_fetch_assoc($result);	// 하나의 레코드 가져오기
 
 	  	$num = $row["num"];		// 일련번호
 		$id = $row["id"];	// 아이디
@@ -87,7 +95,7 @@
 			$view_url = "index.php?type=view&table=$table&num=$num&page=$page";
 			?>
 		<span class="col2">
-			<a href="<?=$view_url?>">
+			<a href="<?=$view_url?>">	<!--view 페이지로 이동-->
 				<?php
 				if($table=="_youtube" && $file_name)	// 유튜브 게시판이면서 파일이 있으면
 					echo "<img src='./data/".$file_copied."' width='150'>".$subject;
@@ -118,6 +126,7 @@
    	mysqli_close($con);
 ?>
 	</ul>
+
 <!-- 페이지 내비게이션 -->
 	<ul class="page_num"> 	
 <?php

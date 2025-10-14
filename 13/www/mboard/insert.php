@@ -93,5 +93,3 @@
 	    location.href = 'index.php?type=list&table=$table';
 	   </script>";
 ?>
-
-  

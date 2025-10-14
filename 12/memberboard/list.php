@@ -31,7 +31,7 @@
 
 	$scale = 4;	// 한 화면에 표시되는 글 수
 
-	// 전체 페이지 수($total_page) 계산 
+	// 전체 페이지 수($total_page) 계산
 	if ($total_record % $scale == 0)     
 		$total_page = floor($total_record/$scale);      
 	else

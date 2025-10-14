@@ -26,18 +26,18 @@
 <?php
     if(!$userid) {
 ?>                
-                <span><a href="form.php">회원가입</a> </span>
-                <span> | </span>
-                <span><a href="login_form.php">로그인</a></span>
+        <span><a href="form.php">회원가입</a> </span>
+        <span> | </span>
+        <span><a href="login_form.php">로그인</a></span>
 <?php
     } else {
-                $logged = $username."(".$userid.")";
+        $logged = $username."(".$userid.")";
 ?>
-                <span><?=$logged?> </span>
-                <span> | </span>
-                <span><a href="logout.php">로그아웃</a> </span>
-                <span> | </span>
-                <span><a href="modify_form.php">정보수정</a></span>
+        <span><?=$logged?> </span>
+        <span> | </span>
+        <span><a href="logout.php">로그아웃</a> </span>
+        <span> | </span>
+        <span><a href="modify_form.php">정보수정</a></span>
 <?php
     }
 ?>

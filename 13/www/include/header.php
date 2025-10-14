@@ -4,22 +4,6 @@
     $userid = isset($_SESSION["userid"]) ? $_SESSION["userid"] : "";
     $username = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
     $userlevel = isset($_SESSION["userlevel"]) ? $_SESSION["userlevel"] : "";
-
-    // if(isset($_SESSION["userid"]))
-    //     $userid = $_SESSION["userid"];
-    // else {
-    //     $userid = "";
-    // }
-
-    // if(isset($_SESSION["username"]))
-    //     $username = $_SESSION["username"];
-    // else
-    //     $username = "";
-
-    // if(isset($_SESSION["userlevel"]))
-    //     $username = $_SESSION["userlevel"];
-    // else
-    //     $userlevel = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">

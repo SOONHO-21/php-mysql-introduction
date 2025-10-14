@@ -7,7 +7,7 @@
           
     include "../include/db_connect.php";
 
-    if(isset($_FILES['profile_img']) && $_FILES['profile_img']['name'] != "") {    // 'modify_form.php'에서 <input type="file" name="profile_img"> 코드에 근거
+    if (isset($_FILES['profile_img']) && $_FILES['profile_img']['name'] != "") {    // modify_form.php에서 <input type="file" name="profile_img"> 코드에 근거
         $upload_dir = "./profile_upload/";
         $file_name = $_FILES['profile_img']['name'];    // 클라이언트 머신에 존재하는 파일의 원래 이름
         $file_tmp  = $_FILES['profile_img']['tmp_name'];    // 서버에 저장된 업로드된 파일의 임시 파일 이름

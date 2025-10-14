@@ -38,7 +38,7 @@
 		if( $upfile_size  > 10000000 ) {
 				echo("
 				<script>
-				alert('업로드 파일 크기가 지정된 용량(10MB)을 초과합니다!<br>파일 크기를 체크해주세요! ');
+				alert('업로드 파일 크기가 지정된 용량(10MB)을 초과합니다!<br>파일 크기를 체크해주세요!');
 				history.go(-1);
 				</script>
 				");
@@ -76,5 +76,5 @@
 	// 목록 페이지로 이동
 	echo "<script>
 	    location.href = 'list.php';
-	   </script>";
+		s</script>";
 ?>

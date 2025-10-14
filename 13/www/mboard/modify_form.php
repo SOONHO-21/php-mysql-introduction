@@ -1,5 +1,5 @@
 <?php
-	$num  = $_GET["num"];
+	$num = $_GET["num"];
 
     include "../include/db_connect.php";
 	$sql = "select * from $table where num=$num";	// 레코드 검색
@@ -7,10 +7,10 @@
 
 	$row = mysqli_fetch_assoc($result);
 
-	$name    	= $row["name"];			// 이름
-	$subject    = $row["subject"];		// 제목
-	$content    = $row["content"];		// 내용
-	$is_html    = $row["is_html"]; 		// HTML 쓰기
+	$name = $row["name"];			// 이름
+	$subject = $row["subject"];		// 제목
+	$content = $row["content"];		// 내용
+	$is_html = $row["is_html"]; 		// HTML 쓰기
 	if ($is_html=="y")
 		$html_checked = "checked";
 	else 

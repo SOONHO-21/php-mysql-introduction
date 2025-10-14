@@ -16,7 +16,7 @@
     }
     else {
         $row = mysqli_fetch_assoc($result); //쿼리 정보를 가져와 row에 저장(객체)
-        $db_pass = $row["pass"];    //password 저장
+        $db_pass = $row["pass"];    //쿼리에서 가져온 password를 $db_pass에 저장
 
         mysqli_close($con);
 

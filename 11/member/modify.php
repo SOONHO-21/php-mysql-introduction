@@ -1,4 +1,5 @@
 <?php
+    # 정보수정은 패스워드, 이름, 이메일만 가능
     $id = $_GET["id"];
 
     $pass = $_POST["pass"];
@@ -14,8 +15,8 @@
     mysqli_close($con);     
 
     echo "
-	      <script>
-	          location.href = 'index.php';
-	      </script>
-	  ";
+        <script>
+            location.href = 'index.php';
+        </script>
+        ";
 ?>
